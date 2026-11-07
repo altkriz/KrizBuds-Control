@@ -1,0 +1,6 @@
+{
+  "name": "KrizBuds Control",
+  "description": "Companion audio manager for wireless earbuds and headphones with real-time battery status, ANC mode controls, Beast Mode toggle, and light/dark theme switching.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
