@@ -22,18 +22,18 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boat.control.AncLevel
-import com.boat.control.AncMode
-import com.boat.control.DiscoveredDevice
-import com.boat.control.EarbudsState
-import com.boat.control.EqPreset
+import com.krizbuds.control.AncLevel
+import com.krizbuds.control.AncMode
+import com.krizbuds.control.DiscoveredDevice
+import com.krizbuds.control.EarbudsState
+import com.krizbuds.control.EqPreset
 import com.example.ui.components.*
 import com.example.ui.theme.CyanPrimary
 import com.example.ui.theme.TealAccent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BoatControlApp(
+fun KrizBudsApp(
     state: EarbudsState,
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,

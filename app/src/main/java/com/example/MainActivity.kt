@@ -15,19 +15,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
-import com.boat.control.BluetoothBoatManager
-import com.example.ui.BoatControlApp
-import com.example.ui.theme.BoatControlTheme
+import com.krizbuds.control.BluetoothEarbudsManager
+import com.example.ui.KrizBudsApp
+import com.example.ui.theme.KrizBudsTheme
 
 class MainActivity : ComponentActivity() {
-    private lateinit var boatManager: BluetoothBoatManager
+    private lateinit var earbudsManager: BluetoothEarbudsManager
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { perms ->
         val allGranted = perms.values.all { it }
         if (allGranted) {
-            boatManager.checkPairedDevices()
+            earbudsManager.checkPairedDevices()
         } else {
             Toast.makeText(this, "Bluetooth permissions are required to detect earbuds", Toast.LENGTH_LONG).show()
         }
@@ -38,32 +38,32 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         try {
-            boatManager = BluetoothBoatManager(applicationContext)
+            earbudsManager = BluetoothEarbudsManager(applicationContext)
         } catch (e: Exception) {
             Toast.makeText(this, "Error initializing: ${e.message}", Toast.LENGTH_LONG).show()
         }
 
         setContent {
             var isDarkTheme by rememberSaveable { mutableStateOf(true) }
-            val state by boatManager.state.collectAsState()
+            val state by earbudsManager.state.collectAsState()
 
-            BoatControlTheme(darkTheme = isDarkTheme) {
-                BoatControlApp(
+            KrizBudsTheme(darkTheme = isDarkTheme) {
+                KrizBudsApp(
                     state = state,
                     isDarkTheme = isDarkTheme,
                     onToggleTheme = { isDarkTheme = !isDarkTheme },
-                    onModeSelected = { boatManager.setMode(it) },
-                    onAncLevelSelected = { boatManager.setAncLevel(it) },
-                    onBeastModeToggled = { boatManager.toggleBeastMode(it) },
+                    onModeSelected = { earbudsManager.setMode(it) },
+                    onAncLevelSelected = { earbudsManager.setAncLevel(it) },
+                    onBeastModeToggled = { earbudsManager.toggleBeastMode(it) },
                     onScanClicked = {
                         requestRequiredPermissions()
-                        boatManager.startScan()
+                        earbudsManager.startScan()
                     },
                     onDeviceSelected = { dev ->
-                        boatManager.connectToDevice(dev.device)
+                        earbudsManager.connectToDevice(dev.device)
                     },
-                    onDisconnect = { boatManager.disconnect() },
-                    onEqPresetSelected = { boatManager.setEqPreset(it) }
+                    onDisconnect = { earbudsManager.disconnect() },
+                    onEqPresetSelected = { earbudsManager.setEqPreset(it) }
                 )
             }
         }
@@ -92,7 +92,7 @@ class MainActivity : ComponentActivity() {
         if (needed.isNotEmpty()) {
             permissionLauncher.launch(needed.toTypedArray())
         } else {
-            boatManager.checkPairedDevices()
+            earbudsManager.checkPairedDevices()
         }
     }
 }

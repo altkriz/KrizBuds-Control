@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boat.control.DiscoveredDevice
+import com.krizbuds.control.DiscoveredDevice
 import com.example.ui.theme.CyanPrimary
 import com.example.ui.theme.TealAccent
 
@@ -72,14 +72,14 @@ fun DeviceSelectionCard(
                     Spacer(modifier = Modifier.width(10.dp))
                     Column {
                         Text(
-                            text = "AVAILABLE boAt DEVICES",
+                            text = "AVAILABLE WIRELESS DEVICES",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
                             color = textPrimary,
                             letterSpacing = 0.5.sp
                         )
                         Text(
-                            text = if (isScanning) "Searching for Airdopes / Nirvana / Rockerz..." else "${discoveredDevices.size} devices found",
+                            text = if (isScanning) "Searching for nearby audio devices..." else "${discoveredDevices.size} devices found",
                             fontSize = 11.sp,
                             color = textMuted
                         )
@@ -105,7 +105,7 @@ fun DeviceSelectionCard(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = if (isScanning) "Listening for Bluetooth advertising broadcasts..." else "Tap 'Scan Earbuds' to discover nearby boAt devices",
+                        text = if (isScanning) "Listening for Bluetooth advertising broadcasts..." else "Tap 'Scan Earbuds' to discover nearby devices",
                         fontSize = 12.sp,
                         color = textMuted
                     )

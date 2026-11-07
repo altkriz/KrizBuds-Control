@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boat.control.FirmwareDownloader
+import com.krizbuds.control.FirmwareDownloader
 import com.example.ui.theme.CyanPrimary
 import com.example.ui.theme.EmeraldConnected
 import com.example.ui.theme.TealAccent
@@ -101,7 +101,7 @@ fun FirmwareCard(
                     color = TealAccent.copy(alpha = 0.12f)
                 ) {
                     Text(
-                        text = "Official boAt OTA",
+                        text = "Cloud OTA Service",
                         fontSize = 10.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = TealAccent,
@@ -112,7 +112,7 @@ fun FirmwareCard(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // Real boAt OTA Cloud Download Action
+            // Real Hearable OTA Cloud Download Action
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -124,13 +124,13 @@ fun FirmwareCard(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "boAt Cloud OTA",
+                        text = "KrizBuds Cloud OTA",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = textPrimary
                     )
                     Text(
-                        text = otaResultText ?: "wearable.boat-lifestyle.com",
+                        text = otaResultText ?: "Official Firmware Server",
                         fontSize = 10.sp,
                         color = if (otaResultText != null) EmeraldConnected else textMuted
                     )
@@ -141,7 +141,7 @@ fun FirmwareCard(
                         if (!isCheckingOta) {
                             isCheckingOta = true
                             otaProgress = 0
-                            otaResultText = "Querying boAt servers..."
+                            otaResultText = "Querying OTA servers..."
                             coroutineScope.launch {
                                 val res = FirmwareDownloader.checkAndDownloadFirmware(
                                     productId = 141,

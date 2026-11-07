@@ -74,8 +74,8 @@ fun HeroConnectedCard(
                     .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.boat_earbuds_hero),
-                    contentDescription = "boAt Earbuds 3D Render",
+                    painter = painterResource(id = R.drawable.krizbuds_hero),
+                    contentDescription = "KrizBuds 3D Render",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )

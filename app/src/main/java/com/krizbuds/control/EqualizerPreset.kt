@@ -1,4 +1,4 @@
-package com.boat.control
+package com.krizbuds.control
 
 enum class EqPreset(val id: Byte, val title: String) {
     SIGNATURE(0x00.toByte(), "Signature"),

@@ -6,7 +6,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-val BoatDarkColorScheme = darkColorScheme(
+val KrizDarkColorScheme = darkColorScheme(
     primary = CyanPrimary,
     onPrimary = Color.Black,
     primaryContainer = CyanPrimaryContainerDark,
@@ -29,7 +29,7 @@ val BoatDarkColorScheme = darkColorScheme(
     outlineVariant = DarkSurfaceHighlight
 )
 
-val BoatLightColorScheme = lightColorScheme(
+val KrizLightColorScheme = lightColorScheme(
     primary = CyanPrimaryLight,
     onPrimary = Color.White,
     primaryContainer = CyanPrimaryContainerLight,
@@ -53,11 +53,11 @@ val BoatLightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun BoatControlTheme(
+fun KrizBudsTheme(
     darkTheme: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) BoatDarkColorScheme else BoatLightColorScheme
+    val colorScheme = if (darkTheme) KrizDarkColorScheme else KrizLightColorScheme
 
     MaterialTheme(
         colorScheme = colorScheme,

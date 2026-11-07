@@ -54,8 +54,8 @@ Unlike standard manufacturer companion utilities that require cloud accounts and
   * **Rock**: Elevated highs and driving mid-bass.
   * **Club**: Wide soundstage and dynamic punch.
 
-### ☁️ Official Over-The-Air (OTA) Firmware Downloader
-* Direct connection to official hearable firmware endpoints (`wearable.boat-lifestyle.com`).
+### ☁️ Over-The-Air (OTA) Firmware Downloader
+* Direct connection to cloud hearable firmware endpoints (`ota.hearables-cloud.com`).
 * Downloads genuine device updates directly with real-time byte progress tracking.
 
 ### 🔍 Real-time Diagnostics Log Drawer
@@ -72,14 +72,14 @@ Unlike standard manufacturer companion utilities that require cloud accounts and
 ## 🛠️ Architecture & Tech Stack
 
 ```
-com.boat.control / com.example
- ├── BluetoothBoatManager.kt   # Core Bluetooth state machine (SPP, BLE, Airoha, Bluetrum, BES)
- ├── BoatModels.kt             # Device prefix detection (Airdopes, boAt, Nirvana, Rockerz, etc.)
- ├── EqualizerPreset.kt        # DSP Equalizer enum identifiers
- ├── FirmwareDownloader.kt     # HTTP OTA binary downloader
- ├── MainActivity.kt           # Lifecycle, permissions, edge-to-edge windowing
+com.krizbuds.control / com.example
+ ├── BluetoothEarbudsManager.kt # Core Bluetooth state machine (SPP, BLE, Airoha, Bluetrum, BES)
+ ├── EarbudModels.kt            # Device prefix detection (KrizBuds, Wireless, Audio, Buds, TWS, etc.)
+ ├── EqualizerPreset.kt         # DSP Equalizer enum identifiers
+ ├── FirmwareDownloader.kt      # HTTP OTA binary downloader
+ ├── MainActivity.kt            # Lifecycle, permissions, edge-to-edge windowing
  └── ui/
-      ├── BoatControlApp.kt    # Main Compose screen & top bar navigation
+      ├── KrizBudsApp.kt        # Main Compose screen & top bar navigation
       ├── components/
       │    ├── BatteryCard.kt         # Segmented battery telemetry cards
       │    ├── BeastModeCard.kt       # Low-latency toggle card

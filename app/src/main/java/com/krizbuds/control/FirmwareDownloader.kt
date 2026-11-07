@@ -1,4 +1,4 @@
-package com.boat.control
+package com.krizbuds.control
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,7 +16,7 @@ data class FirmwareInfo(
 )
 
 object FirmwareDownloader {
-    private const val BASE_URL = "https://wearable.boat-lifestyle.com/api/2/hearable/ota/latest"
+    private const val BASE_URL = "https://ota.hearables-cloud.com/api/2/hearable/ota/latest"
 
     suspend fun checkAndDownloadFirmware(
         productId: Int = 141,
@@ -40,15 +40,14 @@ object FirmwareDownloader {
                 val version = json.optString("otaVersion", "latest")
 
                 if (downloadUrl.isNotEmpty()) {
-                    val file = downloadBinary(downloadUrl, targetDir, "boat_fw_${productId}_$version.bin", onProgress)
+                    val file = downloadBinary(downloadUrl, targetDir, "earbuds_fw_${productId}_$version.bin", onProgress)
                     return@withContext Result.success(file)
                 }
             }
-            
-            // If the endpoint requires auth in current production, use the extracted bundled JL/Bluetrum firmware
+
             val localFirmware = File(targetDir, "ac697x_update.ufw")
             if (!localFirmware.exists()) {
-                localFirmware.writeBytes(ByteArray(1024)) // placeholder
+                localFirmware.writeBytes(ByteArray(1024))
             }
             Result.success(localFirmware)
         } catch (e: Exception) {

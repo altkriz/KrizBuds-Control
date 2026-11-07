@@ -1,4 +1,4 @@
-package com.boat.control
+package com.krizbuds.control
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -59,12 +59,12 @@ data class EarbudsState(
     val ancLevel: AncLevel = AncLevel.DEFAULT,
     val isBeastMode: Boolean = false,
     val firmwareVersion: String = "Reading...",
-    val statusLog: String = "Ready to scan for boAt devices",
+    val statusLog: String = "Ready to scan for audio devices",
     val discoveredDevices: List<DiscoveredDevice> = emptyList()
 )
 
-class BluetoothBoatManager(private val context: Context) {
-    private val TAG = "boAtControl"
+class BluetoothEarbudsManager(private val context: Context) {
+    private val TAG = "KrizBudsControl"
     private var bluetoothManager: BluetoothManager? = null
     private var adapter: BluetoothAdapter? = null
     private var gatt: BluetoothGatt? = null
@@ -79,11 +79,11 @@ class BluetoothBoatManager(private val context: Context) {
     val state: StateFlow<EarbudsState> = _state.asStateFlow()
 
     companion object {
-        // Airoha AB1562 / AB155x SPP UUID (Used by boAt Nirvana Lucid / Pro / ANC)
+        // Airoha AB1562 / AB155x SPP UUID
         val AIROHA_SPP_UUID: UUID = UUID.fromString("00000000-0000-0000-0099-aabbccddeeff")
         // Standard Bluetooth Serial Port Profile (SPP)
         val STANDARD_SPP_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
-        // BES / Bestechnic SPP UUID (Used by boAt Airdopes 800, etc.)
+        // BES / Bestechnic SPP UUID
         val BES_SPP_UUID: UUID = UUID.fromString("66666666-6666-6666-6666-666666666666")
         
         // BLE Services for Bluetrum & Standard BLE devices
@@ -178,15 +178,15 @@ class BluetoothBoatManager(private val context: Context) {
 
         try {
             val bonded = adapter?.bondedDevices ?: return
-            val boatDevices = bonded.filter { dev ->
+            val pairedDevices = bonded.filter { dev ->
                 val name = dev.name ?: ""
-                BoatModels.isBoatDevice(name)
-            }.map { DiscoveredDevice(it, it.name ?: "Unknown boAt", it.address) }
+                EarbudModels.isSupportedDevice(name)
+            }.map { DiscoveredDevice(it, it.name ?: "Unknown Earbuds", it.address) }
 
-            if (boatDevices.isNotEmpty()) {
+            if (pairedDevices.isNotEmpty()) {
                 _state.value = _state.value.copy(
-                    discoveredDevices = boatDevices,
-                    statusLog = "Found ${boatDevices.size} paired boAt device(s)"
+                    discoveredDevices = pairedDevices,
+                    statusLog = "Found ${pairedDevices.size} paired device(s)"
                 )
             }
         } catch (e: SecurityException) {
@@ -202,7 +202,7 @@ class BluetoothBoatManager(private val context: Context) {
                 val dev = result?.device ?: return
                 val name = dev.name ?: result.scanRecord?.deviceName ?: return
 
-                if (BoatModels.isBoatDevice(name)) {
+                if (EarbudModels.isSupportedDevice(name)) {
                     val currentList = _state.value.discoveredDevices.toMutableList()
                     if (currentList.none { it.address == dev.address }) {
                         currentList.add(DiscoveredDevice(dev, name, dev.address))
@@ -238,7 +238,7 @@ class BluetoothBoatManager(private val context: Context) {
         }
 
         checkPairedDevices()
-        _state.value = _state.value.copy(isScanning = true, statusLog = "Scanning for boAt Bluetooth devices...")
+        _state.value = _state.value.copy(isScanning = true, statusLog = "Scanning for Bluetooth earbuds...")
 
         try {
             val settings = ScanSettings.Builder()
@@ -277,7 +277,7 @@ class BluetoothBoatManager(private val context: Context) {
         stopScan()
         disconnect()
 
-        val devName = try { device.name ?: "boAt Hearable" } catch (e: SecurityException) { "boAt Hearable" }
+        val devName = try { device.name ?: "Wireless Earbuds" } catch (e: SecurityException) { "Wireless Earbuds" }
         _state.value = _state.value.copy(
             isConnecting = true,
             deviceName = devName,
@@ -341,7 +341,7 @@ class BluetoothBoatManager(private val context: Context) {
                 _state.value = _state.value.copy(
                     isConnected = true,
                     isConnecting = false,
-                    statusLog = "Connected to ${device.name ?: "boAt"} via Audio Control Channel!"
+                    statusLog = "Connected to ${device.name ?: "Earbuds"} via Audio Control Channel!"
                 )
 
                 // Send Airoha RACE Battery query packet
@@ -549,9 +549,9 @@ class BluetoothBoatManager(private val context: Context) {
 
             try {
                 var configured = false
-                val boatService = g.getService(BLUETRUM_SERVICE)
-                if (boatService != null) {
-                    val notifyChar = boatService.getCharacteristic(BLUETRUM_NOTIFY_CHAR)
+                val bleService = g.getService(BLUETRUM_SERVICE)
+                if (bleService != null) {
+                    val notifyChar = bleService.getCharacteristic(BLUETRUM_NOTIFY_CHAR)
                     if (notifyChar != null) {
                         g.setCharacteristicNotification(notifyChar, true)
                         val cccd = notifyChar.getDescriptor(CCCD_UUID)

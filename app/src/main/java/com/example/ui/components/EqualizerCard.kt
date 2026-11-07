@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boat.control.EqPreset
+import com.krizbuds.control.EqPreset
 import com.example.ui.theme.CyanPrimary
 import com.example.ui.theme.TealAccent
 
@@ -67,7 +67,7 @@ fun EqualizerCard(
                     Spacer(modifier = Modifier.width(10.dp))
                     Column {
                         Text(
-                            text = "boAt SIGNATURE SOUND™ EQ",
+                            text = "KRIZ SIGNATURE SOUND™ EQ",
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
                             color = textPrimary,

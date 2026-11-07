@@ -29,8 +29,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boat.control.AncLevel
-import com.boat.control.AncMode
+import com.krizbuds.control.AncLevel
+import com.krizbuds.control.AncMode
 import com.example.ui.theme.CyanPrimary
 import com.example.ui.theme.TealAccent
 
